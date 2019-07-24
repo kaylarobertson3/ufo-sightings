@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>US UFO Sightings | Dataviz</title>
+  <meta name="description" content="Data vizualization of UFO sightings in the United States" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,500,600" rel="stylesheet" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+
+<body>
+  <div id="body-wrap">
+    <section class="section" id="intro">
+      <div class="stars">
+        <div class="shooting star-1"></div>
+        <div class="shooting star-2"></div>
+      </div>
+      <div id="ufo">
+        <img src="img/ufo-body.svg" class="ufo-body" />
+        <img src="img/ufo-beam.svg" class="ufo-beam" />
+      </div>
+      <div class="moon">
+        <img src="img/moon-white.svg" alt="decorative moon" />
+      </div>
+      <div class="clouds">
+        <img src="img/cloud-3.svg" alt="decorative cloud" id="cloud3" />
+        <img src="img/cloud-2.svg" alt="decorative cloud" id="cloud2" />
+        <img src="img/cloud-1.svg" alt="decorative cloud" id="cloud1" />
+      </div>
+      <div class="intro-wrap">
+        <div class="intro-text">
+          <h1>Unidentified <br />flying objects</h1>
+          <div class="scroll-down">
+            <p>SCROLL</p>
+            <div class="arrow"></div>
+          </div>
+        </div>
+      </div>
+      <div class="rocks">
+        <img src="img/rock-1.svg" alt="decorative rock" />
+        <img src="img/rock-2.svg" alt="decorative rock" />
+      </div>
+    </section>
+    <div class="intro-graf">
+      <article>
+        <p>
+          Is it a bird? Or a plane? If it isn’t not clear, it’s an unidentified flying object.
+          Between 1910 and 2013, there were over 65,000 reports* of Unidentified Flying Object sightings in the United
+          States, occording to the <a href="http://www.nuforc.org/">National UFO Reporting
+            Center (NURC)</a>, an orgnization that collects and investigates UFO sightings.
+          <p>
+            <br />
+            Despite <a
+              href="https://www.theguardian.com/world/2018/sep/21/what-is-behind-the-decline-in-ufo-sightings">reports
+              that UFO sightings are dwindling</a>, the U.S. government hasn't stopped from dedicating funds and
+            research to the phenomenon. The Pentagon's top-secret UFO
+            research office, the Advanced Aerospance Threat Identification Program began in 2007 and ended in 2012, but
+            not before going through <a
+              href="https://www.nytimes.com/2017/12/16/us/politics/pentagon-program-ufo-harry-reid.html">$22 million in
+              funding</a>. It came to public attention following a New York Times investigation into the organization
+            in 2017. While the Defense Intelligence Agency has since released <a
+              href="https://fas.org/irp/dia/aatip-list.pdf">38 research titles</a> about their findings, part of the
+            data remains classified.
+            <p>
+              <br />
+              The once-secret organization isn't the only way the United States shows interest in extraterrestrial
+              research.
+              In February 2019, President Trump signed into effect the U.S. Space Force, a national security entitiy and
+
+              space warfare service. While the Space Force isn't primarily for UFO research, it's the first time the
+              military has
+              had a dedicated space sector in the United States, continuing a history of the United States' government
+              taking
+              interest into matters beyond our atmosphere.
+              Two months later, the U.S. Navy announced that they've had an increase of UFO sightings, and drafted new
+              guidelines for officially reporting UFOs, <a
+                href="https://www.politico.com/story/2019/04/23/us-navy-guidelines-reporting-ufos-1375290">Politico
+                reports</a>. While this doesn't mean the Navy is suddenly concerned about aliens, it puts into place a
+              more formal
+              reporting process so no unknown sightings slip through the cracks, a former Pentagon
+              intelligence officer told Politico.
+              <p>
+                <br />
+                "There have been a number of reports of unauthorized and/or unidentified aircraft entering various
+                military-controlled ranges and designated air space in recent years," the Navy said in
+                response to questions from POLITICO. "For safety and security concerns, the Navy and the [U.S. Air
+                Force] takes these reports very seriously and investigates each and every report." As the U.S prepares
+                for shifts in the way space and UFOs are studied, scroll down to look back at nearly 100 years
+                of NUFORC UFO reports to understand what they tell us about what we see in the night sky.
+              </p>
+              <p class="footnote">
+                Data between 1910 and 2013 in the U.S. only. Data removed in missing fields or presumed hoax.
+              </p>
+
+      </article>
+    </div>
+    <section id="scroll">
+      <div class="scroll__graphic sticky">
+        <div class="chart">
+          <p>Please turn off your ad blocker and reload :) <br />If this problem persists, <a
+              href="mailto:kayla.robertson3@gmail.com">let me know.</a></p>
+          <svg id="heatmapSvg"></svg>
+          <svg id="mapSvg"></svg>
+          <svg id="shapeChartSvg"></svg>
+          <svg id="lineChartSvg"></svg>
+          <div class="legend"></div>
+        </div>
+      </div>
+      <div class="scroll__text">
+        <div class="step" data-step="0">
+          <div class="step-text">
+            <h1>UFO sightings by weekday and time</h1>
+            <p>
+              Of the 65,114 UFO sightings in the US between January 1910 and
+              December 2013, unsuprisingly, not many sightings happen when the
+              sun is out. Most sightings happen at night, when the mysterious
+              objects’ lights can be seen. Hover over a circle to
+              find out how many UFO sightings occurred on a certain weekday
+              and time.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="1">
+          <div class="step-text">
+            <h1>Late, weekend nights</h1>
+            <p>
+              Most sightings happen around the end of the workweek, between
+              19:00 and 23:00. Many reports mention “stepping outside for a
+              cigarette”, while others describe spotting UFOS while inside a
+              vehicle. The most common day for UFO spotting is Saturday, with Friday at a close second. The best time
+              for UFO sightings is 9pm or 10pm.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-text">
+            <h1>West is best</h1>
+            <p>
+              Out of the total number of UFO sightings per state (normalized by
+              population), many happen in the West or North East. Hover or click on a state to see how many UFO
+              sightings occured per 100,000 people between 1910 and 2013.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="4">
+          <div class="step-text">
+            <h1>Washington</h1>
+            <p>
+              The highest number of UFO sightings was in Washington at 58
+              sightings per 100,000 people. There's an Hover over a circle to see details
+              about each reported incident.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="5">
+          <div class="step-text">
+            <h1>Montana</h1>
+            <p>
+              Montana also boasts a high sighting rate by population, possibly
+              due to its large size and many rural, wooded areas. Hover over a
+              circle to see details about each reported incident.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="6">
+          <div class="step-text">
+            <h1>Circles, triangles and fireballs</h1>
+            <p>
+              According to NURC reports, 21.2 percent of UFO sightings are described as
+              looking like "light". 13.47 percent appear as "round" or "circular", and 10.63 percent appear
+              triangle-like.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="7">
+          <div class="step-text">
+            <h1>UFO sightings over time</h1>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="8"></div>
+        <div class="step" data-step="9">
+          <div class="step-text">
+            <h1>UFO sightings by month</h1>
+            <p>
+              Most UFO sightings happen in summer and fall, possibly due to spending more time outside. The month that
+              holds the most UFO sightings is July.
+            </p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+        <div class="step" data-step="10">
+          <div class="step-text">
+            <h1>Aliens or fireworks?</h1>
+            <p>Out of 7,639 total July sightings from 1910 to 2013, 1,083 happened on July 4th. Whether this is due to
+              people misinteperting fireworks for UFOS, or simply more people
+              outside at night, looking the sky, July 4th stands as the most common day to spot a UFO.</p>
+            <div class="tooltip"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="outro">
+      <article>
+        <p>
+          From the National UFO Reporting Center. While the NUFOC keeps international records, I filtered by the U.S for
+          this project due to most being U.S.-based, and for clarity.
+          Map population data from the United States Census. Made with the help of D3, d3-legend, d3-annotations. Fonts
+          from VTF and Google Fonts.
+
+          <a href="https://github.com/kaylarobertson3/UFO-academy-presentation">View on github</a>
+        </p>
+      </article>
+    </section>
+  </div>
+  <script src="lib/d3.v4.min.js"></script>
+  <script src="lib/d3-annotation.min.js"></script>
+  <script src="lib/d3-legend.min.js"></script>
+  <script src="lib/scrollama.min.js"></script>
+  <script src="lib/stickyfill.min.js"></script>
+  <script type="text/javascript" src="charts/heatmap.js"></script>
+  <script type="text/javascript" src="charts/map.js"></script>
+  <script type="text/javascript" src="charts/shapeChart.js"></script>
+  <script type="text/javascript" src="charts/lineChart.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
