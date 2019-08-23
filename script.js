@@ -39,7 +39,6 @@ if (window.innerWidth < 600) {
 }
 
 var windowWidth = container.node().offsetWidth;
-console.log("windowWidth", windowWidth)
 function getChartWidth() {
     var chartWidth;
     if (window.innerWidth < 800) {

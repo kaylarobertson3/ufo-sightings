@@ -3,8 +3,8 @@ var currentState;
 var mapData;
 
 function initMap() {
-  d3.json("data/map/states.json", function(geoData) {
-    d3.csv("data/map/UFO-sightings-by-pop.csv", function(error, data) {
+  d3.json("data/map/states.json", function (geoData) {
+    d3.csv("data/map/UFO-sightings-by-pop.csv", function (error, data) {
       if (error) {
         console.log("error getting data");
       } else {
@@ -62,7 +62,7 @@ function drawMap(data) {
     .attr("id", "state")
     .style("stroke", "#0A1E24")
     .style("stroke-width", ".7")
-    .attr("fill", function(d) {
+    .attr("fill", function (d) {
       return mapColorScale(d.properties.sightings);
     });
 
@@ -107,40 +107,37 @@ function drawMapLegend() {
     .call(colorLegend);
 }
 
-var mapMouseOver = function(d) {
+var mapMouseOver = function (d) {
   d3.select(this).style("opacity", ".7");
   d3.select(this).style("cursor", "pointer");
   tooltip.html(
     "In <span>" +
-      d.properties.NAME +
-      "</span>, there were <span>" +
-      d.properties.sightings +
-      " UFO sightings </span>per 100,000 people"
+    d.properties.NAME +
+    "</span>, there were <span>" +
+    d.properties.sightings +
+    " UFO sightings </span>per 100,000 people"
   );
 };
 
-var mapMouseLeave = function(d) {
+var mapMouseLeave = function (d) {
   tooltip.html("Hover over a state for more information");
   d3.select(this).style("opacity", "1");
 };
 
-var circleMouseover = function(d) {
+var circleMouseover = function (d) {
+  const cityCap = d.city.charAt(0).toUpperCase() + d.city.slice(1);
+  console.log("duration", d["duration (hours/min)"])
   d3.select(this).style("opacity", ".7");
   tooltip.html(
-    '"' +
-      d.comments +
-      '" <br/>Duration: ' +
-      d["duration (hours/min)"] +
-      "<br/>Shape: " +
-      d.shape +
-      "<br/>Datetime: " +
-      d.datetime +
-      "<br/>City: " +
-      d.city
+    `<p><span>City:</span>  ${cityCap} </p>
+    <p><span>Date, time: </span> ${d.datetime} </p>
+    <p><span>Duration:</span>  ${ d["duration (hours/min)"]} </p>
+    <p><span>Shape:</span>  ${d.shape} </p>
+    <p><span>Description:</span> "${d.comments}"</p>`
   );
 };
 
-var circleMouseout = function(d) {
+var circleMouseout = function (d) {
   map.selectAll("circle").style("opacity", ".1");
   tooltip.html("Hover over a circle for more information");
 };
@@ -156,7 +153,7 @@ function updateMapWA() {
 
   var path = d3.geoPath().projection(projection);
 
-  d3.csv("data/lat-long/wa-sightings.csv", function(waData) {
+  d3.csv("data/lat-long/wa-sightings.csv", function (waData) {
     var paths = map
       .selectAll("path")
       .on("mouseover", "")
@@ -247,7 +244,7 @@ function updateMapMT() {
 
   var path = d3.geoPath().projection(projection);
 
-  d3.csv("data/lat-long/mt-sightings.csv", function(mtData) {
+  d3.csv("data/lat-long/mt-sightings.csv", function (mtData) {
     var paths = map
       .selectAll("path")
       .on("mouseover", "")

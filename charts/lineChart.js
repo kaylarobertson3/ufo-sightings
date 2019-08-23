@@ -346,8 +346,6 @@ function updateLineChart() {
       d3.selectAll(".lineChart-circle").style("opacity", 1);
     });
 
-  // line.attr("transform", "translate(" + margin.left + ",5)");
-
   var circles = lineChart
     .selectAll("myCircles")
     .data(monthCountData)
@@ -370,7 +368,7 @@ function updateLineChart() {
         "There were <span>" +
         d.count +
         "</span> sightings in <span>" +
-        d.month +
+        months[d.month -1] +
         "</span>"
       );
     })
@@ -381,7 +379,7 @@ function updateLineChart() {
         "There were <span>" +
         d.count +
         "</span> sightings in <span>" +
-        d.month +
+        months[d.month -1] +
         "</span>"
       );
     })
@@ -593,7 +591,6 @@ function updateLineChartJuly() {
       .call(makeAnnotations)
       .style("opacity", "1");
   })
-
 }
 
 function drawLineChartLegend(legendTitle) {

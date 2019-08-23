@@ -547,18 +547,19 @@ h1 {
   border-radius: 5px;
   max-width: 400px;
   z-index: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: rgb(255, 255, 255);
+  line-height: 1.6;
+  font-weight: 700;
 }
-/* 
-.tooltip::before {
-  display: inline-block;
-  content: "";
-  border-top: .3rem solid black;
-  width: 4rem;
-  margin: 0 1rem;
-  transform: translateY(-1rem);
-} */
+
+.tooltip span {
+  font-weight: 700;
+}
+
+.tooltip p {
+  margin-bottom: .5rem;
+}
 
 #num {
   font-weight: 700;
