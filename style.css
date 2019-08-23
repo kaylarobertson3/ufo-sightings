@@ -578,6 +578,7 @@ h1 {
   justify-content: center;
   -ms-flex-line-pack: center;
   align-content: center;
+  z-index: 100;
 }
 
 article {
