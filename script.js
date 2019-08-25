@@ -23,30 +23,16 @@ window.onbeforeunload = function () {
 };
 
 var windowHeight = window.innerHeight;
-var stepWidth = text.node().offsetWidth;
+const stepWidth = 350;
 
-let chartHeight;
-
-if (window.innerWidth < 600) {
-    // chartHeight = windowWidth - margin.top - margin.bottom;
-    chartHeight = 380;
-} else {
-    // chartHeight = 400;
-    chartHeight = windowHeight / 3;
-    if (chartHeight < 380) {
-        chartHeight = 380
-    }
-}
+// const chartHeight = window.innerWidth < 800 ? windowHeight - margin.top - margin.bottom : windowHeight - margin.top - margin.bottom;
+const chartHeight = window.innerWidth < 600 ? windowHeight - 200 : windowHeight - 400;
+// chartHeight = 350;
 
 var windowWidth = container.node().offsetWidth;
-function getChartWidth() {
-    var chartWidth;
-    if (window.innerWidth < 800) {
-        chartWidth = windowWidth - margin.left - margin.right;
-    } else {
-        chartWidth = (windowWidth - stepWidth) - margin.left - margin.right;
-    }
-    return chartWidth;
+
+const getChartWidth = () => {
+    return window.innerWidth < 800 ? windowWidth - margin.left - margin.right : (windowWidth - stepWidth);
 }
 
 function showMap() {
