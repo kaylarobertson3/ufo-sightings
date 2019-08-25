@@ -25,7 +25,6 @@ body {
   font-weight: 300;
   padding: 0;
   margin: 0;
-  /* overflow-x: hidden; */
   color: rgb(154, 154, 154);
   max-width: 100vw;
   display: -webkit-box;
@@ -789,7 +788,7 @@ article {
   }
 
   .rocks img {
-    height: 70%;
+    width: 80px;
   }
 
   .clouds img {
