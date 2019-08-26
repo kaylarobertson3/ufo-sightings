@@ -444,9 +444,11 @@ h1 {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -ms-flex-align: start;
 }
 
 /* scrollama */
@@ -577,6 +579,10 @@ h1 {
   -ms-flex-line-pack: center;
   align-content: center;
   z-index: 100;
+}
+
+.credit {
+  margin-top: 2rem;
 }
 
 article {
