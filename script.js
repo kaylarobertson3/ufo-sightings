@@ -11,7 +11,7 @@ var tooltip = d3.selectAll(".tooltip");
 var legend = d3.selectAll(".legend");
 var axis = d3.selectAll(".axis");
 
-var margin = {
+const margin = {
     top: 30,
     right: 40,
     bottom: 30,
@@ -23,16 +23,18 @@ window.onbeforeunload = function () {
 };
 
 var windowHeight = window.innerHeight;
-const stepWidth = 350;
-
-// const chartHeight = window.innerWidth < 800 ? windowHeight - margin.top - margin.bottom : windowHeight - margin.top - margin.bottom;
-const chartHeight = window.innerWidth < 600 ? windowHeight - (windowHeight * .5) : windowHeight - 400;
-// chartHeight = 350;
+var stepWidth = 350;
 
 var windowWidth = container.node().offsetWidth;
 
+const maxWidth = 1000;
+const containerMaxWidth = window.innerWidth <= maxWidth ? window.innerWidth : 1000;
+
+// const chartHeight = window.innerWidth < 800 ? windowHeight - margin.top - margin.bottom : windowHeight - margin.top - margin.bottom;
+const chartHeight = window.innerWidth < 800 ? windowHeight - (windowHeight * .5) : windowHeight < 900 ? 300 : 350;
+
 const getChartWidth = () => {
-    return window.innerWidth < 800 ? windowWidth - margin.left - margin.right : (windowWidth - stepWidth);
+    return window.innerWidth < 800 ? windowWidth - margin.left - margin.right : (containerMaxWidth - stepWidth - margin.left - margin.right);
 }
 
 function showMap() {
@@ -151,15 +153,14 @@ function handleResize() {
     windowWidth = d3.select("#scroll").node().offsetWidth;
     var stepHeight;
     if (window.innerWidth < 600) {
-        stepHeight = window.innerHeight;
+        stepHeight = text.node().offsetHeight + 200;
     } else {
-        stepHeight = 700;
+        stepHeight = 800;
     }
     step.style("height", stepHeight + "px");
     // 3. tell scrollama to update new element dimensions
     scroller.resize();
 }
-
 var currStep;
 
 // scrollama event handlers
@@ -210,7 +211,7 @@ function handleStepEnter(response) {
         showLineChart();
         drawLineChart(lineChartData);
     } else if (response.index == 7) {
-        // updateLineChart();
+        updateLineChart();
         lineChart.select(".annotation-group").style("opacity", "1");
     } else if (response.index == 8) {
         lineChart.select(".annotation-group").style("opacity", "0");
