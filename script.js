@@ -26,7 +26,7 @@ var windowHeight = window.innerHeight;
 const stepWidth = 350;
 
 // const chartHeight = window.innerWidth < 800 ? windowHeight - margin.top - margin.bottom : windowHeight - margin.top - margin.bottom;
-const chartHeight = window.innerWidth < 600 ? windowHeight - 200 : windowHeight - 400;
+const chartHeight = window.innerWidth < 600 ? windowHeight - (windowHeight * .5) : windowHeight - 400;
 // chartHeight = 350;
 
 var windowWidth = container.node().offsetWidth;
@@ -151,10 +151,9 @@ function handleResize() {
     windowWidth = d3.select("#scroll").node().offsetWidth;
     var stepHeight;
     if (window.innerWidth < 600) {
-        stepHeight = window.innerHeight * 2;
+        stepHeight = window.innerHeight;
     } else {
-        // stepHeight = Math.floor(window.innerHeight);
-        stepHeight = 900;
+        stepHeight = 700;
     }
     step.style("height", stepHeight + "px");
     // 3. tell scrollama to update new element dimensions

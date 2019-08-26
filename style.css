@@ -769,7 +769,7 @@ article {
 
   .step {
     max-width: 90vw;
-    height: 200vh;
+    height: 100vh;
     color: #0a1e24;
   }
 
@@ -788,7 +788,7 @@ article {
   }
 
   .rocks img {
-    width: 80px;
+    width: 100px;
   }
 
   .clouds img {
