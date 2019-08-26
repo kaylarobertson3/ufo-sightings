@@ -30,12 +30,13 @@ var windowWidth = container.node().offsetWidth;
 const maxWidth = 1000;
 const containerMaxWidth = window.innerWidth <= maxWidth ? window.innerWidth : 1000;
 
-// const chartHeight = window.innerWidth < 800 ? windowHeight - margin.top - margin.bottom : windowHeight - margin.top - margin.bottom;
 const chartHeight = window.innerWidth < 800 ? windowHeight - (windowHeight * .5) : windowHeight < 900 ? 300 : 350;
 
 const getChartWidth = () => {
     return window.innerWidth < 800 ? windowWidth - margin.left - margin.right : (containerMaxWidth - stepWidth - margin.left - margin.right);
 }
+
+console.log("getchartwidth", getChartWidth());
 
 function showMap() {
     map

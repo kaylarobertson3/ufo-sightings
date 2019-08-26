@@ -414,8 +414,8 @@ function updateLineChart() {
       x: 7,
       y: 7639
     },
-    dy: 117,
-    dx: 50
+    dy: 169,
+    dx: 0
   }].map(function (d) {
     d.color = "#E8336D";
     return d;

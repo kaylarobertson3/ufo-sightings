@@ -28,16 +28,28 @@ function drawShapeChart(data) {
   var circle = nodes
     .append("circle")
     .attr("r", d => {
-      return d.percent * 3;
+      return d.percent * 4;
     })
     .attr("class", "shape-circle")
-    .attr("cx", getChartWidth() / 2)
-    .attr("cy", shapeChartHeight / 2)
     .style("fill", "#b4fbde")
     .on("mouseover", mouseover)
     .on("click", mouseover)
     .style("cursor", "pointer")
     .on("mouseleave", mouseleave);
+
+  var label = nodes.append("text")
+    .attr("font-size", 12)
+    .style("color", "white")
+    .style("font-weight", "bold")
+    .style("text-transform", "uppercase")
+    .style("text-anchor", "middle")
+    .text(d => d.percent > 6.5 ? d.shape : "");
+
+  var labelVal = nodes.append("text")
+    .attr("font-size", 12)
+    .style("color", "white")
+    .style("text-anchor", "middle")
+    .text(d => d.percent > 6.5 ? d.percent : "");
 
   //forces applied to the nodes
   var simulation = d3
@@ -55,11 +67,10 @@ function drawShapeChart(data) {
       d3
         .forceCollide()
         .strength(0.5)
-        // .radius(30)
         .radius(
           ("r",
             d => {
-              return d.percent * 4;
+              return d.percent * 5;
             })
         )
         .iterations(1)
@@ -69,37 +80,9 @@ function drawShapeChart(data) {
   simulation.nodes(data).on("tick", d => {
     circle.attr("cx", d => d.x);
     circle.attr("cy", d => d.y);
+    label.attr("dx", d => d.x).attr("dy", d => d.y)
+    labelVal.attr("dx", d => d.x).attr("dy", d => d.y + 20)
   });
-
-  const annotations = [
-    {
-      note: {
-        label:
-          "Basic settings with subject position(x,y) and a note offset(dx, dy)"
-      },
-      x: 50,
-      y: 100,
-      dy: 100,
-      dx: 162
-    }
-  ];
-
-  const makeAnnotations = d3
-    .annotation()
-    .type(d3.annotationLabel)
-    .annotations(annotations);
-
-  // shapeChart
-  //   .append("g")
-  //   .attr("class", "annotation-group")
-  //   .call(makeAnnotations)
-  //   .style("opacity", "1")
-
-  circle
-    .append("text")
-    .text(d => d.shape)
-    .attr("fill", "pink")
-    .attr("font-size", 15);
 }
 
 function drawShapeChartLegend() {
