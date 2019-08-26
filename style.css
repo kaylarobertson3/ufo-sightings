@@ -764,7 +764,6 @@ article {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 100%;
     max-width: 1300px;
   }
 
@@ -779,7 +778,7 @@ article {
 
   .step {
     max-width: 90vw;
-    height: 100vh;
+    height: 200vh;
     color: #0a1e24;
   }
 

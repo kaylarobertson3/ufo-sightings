@@ -106,6 +106,13 @@ function drawHorizontalHeatmap(data) {
     .attr("transform", "translate(50," + (chartHeight - 25) + ")")
     .call(d3.axisBottom(x));
 
+  if (getChartWidth() <= 370) {
+    var ticks = xAxis.selectAll(".tick text");
+    ticks.attr("display", function (d, i) {
+      if (i % 2 != 0) return "none";
+    });
+  }
+
   xAxis
     .append("g")
     .attr(
@@ -217,8 +224,6 @@ function drawHorizontalHeatmap(data) {
   });
 
   const makeAnnotations = d3.annotation()
-    // .editMode(true)
-    // .notePadding(15)
     .type(d3.annotationLabel)
     .accessors({
       x: d => {
@@ -251,21 +256,6 @@ function showHigherDays() {
       }
     });
 }
-
-// function showHighestDays() {
-//   drawHeatmapLegend();
-//   legend.style("opacity", 1);
-//   heatmap
-//     .selectAll(".rect")
-//     .transition()
-//     .style("fill-opacity", function (d) {
-//       if (d.num > 1700) {
-//         return 1;
-//       } else {
-//         return 0.3;
-//       }
-//     });
-// }
 
 function exitHeatmap() {
   heatmap
