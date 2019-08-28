@@ -171,6 +171,8 @@ function handleStepEnter(response) {
         return i === response.index;
     });
 
+    console.log("STEP:", response.index)
+
     // update graphic based on step
     if (response.index == 0) {
         d3.selectAll(".shooting").style("opacity", 0);
@@ -212,12 +214,10 @@ function handleStepEnter(response) {
         showLineChart();
         drawLineChart(lineChartData);
     } else if (response.index == 7) {
-        updateLineChart();
         lineChart.select(".annotation-group").style("opacity", "1");
     } else if (response.index == 8) {
-        lineChart.select(".annotation-group").style("opacity", "0");
+        // lineChart.select(".annotation-group").style("opacity", "0");
         updateLineChart();
-        lineChart.select(".annotation-group").style("opacity", "1");
     } else if (response.index == 9) {
         updateLineChartJuly();
     }
