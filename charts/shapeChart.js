@@ -1,5 +1,5 @@
 function initShapeChart() {
-  d3.csv("data/bubble/shape-percent.csv", function (error, data) {
+  d3.csv("data/bubble/shape-percent.csv", function(error, data) {
     drawShapeChart(data);
   });
 }
@@ -9,21 +9,24 @@ function drawShapeChart(data) {
 
   shapeChart.attr("width", getChartWidth()).attr("height", shapeChartHeight);
 
-  var mouseover = function (d) {
+  var mouseover = function(d) {
     tooltip.html(
       "<span>" +
-      d.percent +
-      "</span> percent of total sightings were shaped like <span>" +
-      d.shape +
-      "</span>"
+        d.percent +
+        "</span> percent of total sightings were shaped like <span>" +
+        d.shape +
+        "</span>"
     );
   };
 
-  var mouseleave = function (d) {
+  var mouseleave = function(d) {
     tooltip.html("Hover over a circle for more information");
   };
 
-  var nodes = shapeChart.selectAll("g").data(data).enter()
+  var nodes = shapeChart
+    .selectAll("g")
+    .data(data)
+    .enter();
 
   var circle = nodes
     .append("circle")
@@ -37,19 +40,21 @@ function drawShapeChart(data) {
     .style("cursor", "pointer")
     .on("mouseleave", mouseleave);
 
-  var label = nodes.append("text")
+  var label = nodes
+    .append("text")
     .attr("font-size", 12)
     .style("color", "white")
     .style("font-weight", "bold")
     .style("text-transform", "uppercase")
     .style("text-anchor", "middle")
-    .text(d => d.percent > 6.5 ? d.shape : "");
+    .text(d => (d.percent > 6.5 ? d.shape : ""));
 
-  var labelVal = nodes.append("text")
+  var labelVal = nodes
+    .append("text")
     .attr("font-size", 12)
     .style("color", "white")
     .style("text-anchor", "middle")
-    .text(d => d.percent > 6.5 ? d.percent : "");
+    .text(d => (d.percent > 6.5 ? d.percent : ""));
 
   //forces applied to the nodes
   var simulation = d3
@@ -69,9 +74,9 @@ function drawShapeChart(data) {
         .strength(0.5)
         .radius(
           ("r",
-            d => {
-              return d.percent * 5;
-            })
+          d => {
+            return d.percent * 5;
+          })
         )
         .iterations(1)
     );
@@ -80,8 +85,8 @@ function drawShapeChart(data) {
   simulation.nodes(data).on("tick", d => {
     circle.attr("cx", d => d.x);
     circle.attr("cy", d => d.y);
-    label.attr("dx", d => d.x).attr("dy", d => d.y)
-    labelVal.attr("dx", d => d.x).attr("dy", d => d.y + 20)
+    label.attr("dx", d => d.x).attr("dy", d => d.y);
+    labelVal.attr("dx", d => d.x).attr("dy", d => d.y + 20);
   });
 }
 
@@ -95,5 +100,5 @@ function drawShapeChartLegend() {
     .attr("class", "axis-label")
     .style("color", "white")
     .style("margin-bottom", "15px")
-    .text("Shapes of U.S UFO sightings (perecent of total)");
+    .text("Shapes of U.S UFO sightings (percent of total)");
 }

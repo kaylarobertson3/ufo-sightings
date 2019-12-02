@@ -274,7 +274,7 @@ h1 {
   -ms-flex-pack: justify;
   z-index: 4;
   justify-content: space-between;
-  align-items:flex-end;
+  align-items: flex-end;
   position: fixed;
 }
 
@@ -313,7 +313,6 @@ h1 {
   opacity: 0.5;
   position: absolute;
 }
-
 
 .clouds img:nth-child(1) {
   animation: cloud 35s linear infinite;
@@ -403,22 +402,23 @@ h1 {
   margin-top: 1.5em;
 }
 
-.intro-graf {
+.intro-graf,
+#outro {
   display: flex;
   justify-content: center;
   margin-top: 20%;
   align-items: center;
   z-index: 10;
   padding: 2rem;
-  background: rgba(10, 30, 36, .5);
+  color: #bdbdbd;
+  background: rgba(10, 30, 36, 0.5);
 }
 
-
 .footnote {
-  font-size: .8rem;
+  font-size: 0.8rem;
   margin-top: 1rem;
   line-height: 1.4;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .chart {
@@ -435,20 +435,6 @@ h1 {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-}
-
-#outro {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
-  -webkit-box-align: start;
-  -moz-box-align: start;
-  -ms-flex-align: start;
 }
 
 /* scrollama */
@@ -491,7 +477,9 @@ h1 {
 }
 
 .scroll__text {
-  margin-top: 200px;
+  /* margin-top: 200px; */
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 0 30px 0 30px;
   width: 400px;
@@ -512,7 +500,6 @@ h1 {
   align-items: flex-start;
   color: white;
 }
-
 
 .step-text {
   border-radius: 5px;
@@ -558,7 +545,7 @@ h1 {
 }
 
 .tooltip p {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 #num {
@@ -586,8 +573,6 @@ h1 {
 }
 
 article {
-  -webkit-columns: 2 250px;
-  columns: 2 250px;
   width: 90%;
   align-self: flex-start;
   margin-top: 10%;
@@ -600,7 +585,7 @@ article {
 .tick line {
   stroke-width: 0.5px;
   stroke: rgb(255, 255, 255);
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .tick text {
@@ -726,7 +711,6 @@ article {
 }
 
 @media (max-width: 800px) {
-
   legend .axis-label {
     font-size: 16px;
   }
@@ -734,7 +718,7 @@ article {
   article {
     font-size: 16px;
   }
-  
+
   .tooltip {
     display: none;
   }
@@ -753,7 +737,7 @@ article {
   }
 
   #intro h1 {
-    font-size: 1em;
+    font-size: 1.7em;
   }
 
   #scroll {
