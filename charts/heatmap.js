@@ -66,7 +66,7 @@ var myColor = d3
 
 function initHeatmap() {
   charts.selectAll("p").style("display", "none");
-  d3.csv("data/heatmap/heatmap-data.csv", function (error, data) {
+  d3.csv("data/heatmap/heatmap-data.csv", function(error, data) {
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         const element = data[key].num;
@@ -82,10 +82,7 @@ function initHeatmap() {
 // HORIZONTAL HEATMAP ==========================
 function drawHorizontalHeatmap(data) {
   tooltip.html("Click or hover over a circle for more information");
-  heatmap
-    // .attr("preserveAspectRatio", "xMinYMax meet")
-    .attr("width", getChartWidth() + 50)
-    .attr("height", chartHeight + 50);
+  heatmap.attr("width", getChartWidth() + 50).attr("height", chartHeight + 50);
 
   // Build X scales and axis:
   var x = d3
@@ -108,7 +105,7 @@ function drawHorizontalHeatmap(data) {
 
   if (getChartWidth() <= 370) {
     var ticks = xAxis.selectAll(".tick text");
-    ticks.attr("display", function (d, i) {
+    ticks.attr("display", function(d, i) {
       if (i % 2 != 0) return "none";
     });
   }
@@ -137,28 +134,35 @@ function drawHorizontalHeatmap(data) {
 
   yAxis.selectAll("line").remove();
 
-  yAxis.selectAll("text").html(function (n) {
+  yAxis.selectAll("text").html(function(n) {
     return getWeekday(n);
   });
 
   yAxis.selectAll("text").attr("class", "scale-text");
 
-  var heatmapMouseover = function (d, e) {
-    // tooltip.transition().duration(300).style("display", "block")
-    d3.select(this).style("cursor", "pointer");
-    d3.select(this).style("opacity", ".7");
+  var heatmapMouseover = function(d, e) {
+    // var coordinates = d3.mouse(this);
+    // var x = coordinates[0];
+    // var y = coordinates[1];
+    // .style("position", "absolute")
+    // .style("left", x + "px")
+    // .style("top", y + "px")
+
     tooltip.html(
       "There were <span>" +
-      d.num +
-      "</span> total sightings on <span>" +
-      getWeekday(d.day) +
-      ".</span> at <span>" +
-      d.time +
-      ":00</span>"
+        d.num +
+        "</span> total sightings on <span>" +
+        getWeekday(d.day) +
+        ".</span> at <span>" +
+        d.time +
+        ":00</span>"
     );
+
+    d3.select(this).style("cursor", "pointer");
+    d3.select(this).style("opacity", ".7");
   };
 
-  var heatmapMouseleave = function (d) {
+  var heatmapMouseleave = function(d) {
     d3.select(this).classed("hover", false);
     d3.select(this).style("opacity", "1");
     tooltip.html("Click or hover over a circle for more information");
@@ -166,22 +170,22 @@ function drawHorizontalHeatmap(data) {
 
   heatmap
     .selectAll("rect")
-    .data(data, function (d) {
+    .data(data, function(d) {
       return d.time + ":" + d.day;
     })
     .enter()
     .append("rect")
     .attr("class", "rect")
-    .attr("x", function (d) {
+    .attr("x", function(d) {
       return 50 + x(d.time);
     })
-    .attr("y", function (d) {
+    .attr("y", function(d) {
       return y(d.day);
     })
     .attr("rx", "50%")
     .attr("width", x.bandwidth())
     .attr("height", x.bandwidth())
-    .style("fill", function (d) {
+    .style("fill", function(d) {
       return myColor(d.num);
     })
     .on("mouseover", heatmapMouseover)
@@ -197,33 +201,36 @@ function drawHorizontalHeatmap(data) {
     .attr("opacity", "1");
   drawHeatmapLegend();
 
-  const annotations = [{
-    type: d3.annotationLabel,
-    note: {
-      label: "1,848 UFO sightings between 1910 and 2013",
-      title: "9p.m. Saturday night",
-      wrap: 190,
-      orientation: "top",
-      align: "middle"
-    },
-    connector: {
-      end: "arrow"
-    },
-    subject: {
-      radius: 50
-    },
-    data: {
-      x: 21,
-      y: 6
-    },
-    dy: -100,
-    dx: -100
-  }].map(function (d) {
+  const annotations = [
+    {
+      type: d3.annotationLabel,
+      note: {
+        label: "1,848 UFO sightings between 1910 and 2013",
+        title: "9p.m. Saturday night",
+        wrap: 190,
+        orientation: "top",
+        align: "middle"
+      },
+      connector: {
+        end: "arrow"
+      },
+      subject: {
+        radius: 50
+      },
+      data: {
+        x: 21,
+        y: 6
+      },
+      dy: -100,
+      dx: -100
+    }
+  ].map(function(d) {
     d.color = "#E8336D";
     return d;
   });
 
-  const makeAnnotations = d3.annotation()
+  const makeAnnotations = d3
+    .annotation()
     .type(d3.annotationLabel)
     .accessors({
       x: d => {
@@ -248,7 +255,7 @@ function showHigherDays() {
   heatmap
     .selectAll(".rect")
     .transition()
-    .style("fill-opacity", function (d) {
+    .style("fill-opacity", function(d) {
       if (d.num > 1200) {
         return 1;
       } else {
@@ -296,7 +303,9 @@ function drawHeatmapLegend() {
     .style("color", "white")
     .style("line-height", "1.5")
     .style("margin-bottom", "15px")
-    .html("UFO sightings* by time and day of week <br/> *United States sightings");
+    .html(
+      "UFO sightings* by time and day of week <br/> *United States sightings"
+    );
 
   var colorLegend = d3
     .legendColor()

@@ -7,7 +7,7 @@ var shapeChart = charts.select("#shapeChartSvg");
 var lineChart = charts.select("#lineChartSvg");
 var text = container.select(".scroll__text");
 var step = text.selectAll(".step");
-var tooltip = d3.selectAll(".tooltip");
+var tooltip = d3.select("#tooltip");
 var legend = d3.selectAll(".legend");
 var axis = d3.selectAll(".axis");
 
@@ -164,7 +164,7 @@ function handleResize() {
   if (window.innerWidth < 600) {
     stepHeight = text.node().offsetHeight + 200;
   } else {
-    stepHeight = "95vh";
+    stepHeight = windowHeight * 0.95;
   }
   step.style("height", stepHeight + "px");
   // 3. tell scrollama to update new element dimensions
