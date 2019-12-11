@@ -10,6 +10,11 @@ function drawShapeChart(data) {
   shapeChart.attr("width", getChartWidth()).attr("height", shapeChartHeight);
 
   var mouseover = function(d) {
+    tooltip.style("display", "block");
+    const pageX = d3.event.clientX - d3.event.clientX / 2;
+    const pageY = d3.event.clientY + 40;
+    tooltip.style("left", pageX + "px");
+    tooltip.style("top", pageY + "px");
     tooltip.html(
       "<span>" +
         d.percent +
@@ -21,6 +26,7 @@ function drawShapeChart(data) {
 
   var mouseleave = function(d) {
     tooltip.html("Hover over a circle for more information");
+    tooltip.style("display", "none");
   };
 
   var nodes = shapeChart
@@ -28,33 +34,35 @@ function drawShapeChart(data) {
     .data(data)
     .enter();
 
-  var circle = nodes
+  var circleGroup = nodes.append("g").attr("class", "circle-group");
+
+  var circle = circleGroup
     .append("circle")
     .attr("r", d => {
       return d.percent * 4;
     })
     .attr("class", "shape-circle")
     .style("fill", "#b4fbde")
-    .on("mouseover", mouseover)
+    .on("mousemove", mouseover)
     .on("click", mouseover)
     .style("cursor", "pointer")
     .on("mouseleave", mouseleave);
 
-  var label = nodes
+  var label = circleGroup
     .append("text")
     .attr("font-size", 12)
     .style("color", "white")
     .style("font-weight", "bold")
     .style("text-transform", "uppercase")
     .style("text-anchor", "middle")
-    .text(d => (d.percent > 6.5 ? d.shape : ""));
+    .text(d => (d.percent > 7 ? d.shape : ""));
 
-  var labelVal = nodes
+  var labelVal = circleGroup
     .append("text")
     .attr("font-size", 12)
     .style("color", "white")
     .style("text-anchor", "middle")
-    .text(d => (d.percent > 6.5 ? d.percent : ""));
+    .text(d => (d.percent > 7 ? d.percent : ""));
 
   //forces applied to the nodes
   var simulation = d3

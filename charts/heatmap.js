@@ -140,14 +140,12 @@ function drawHorizontalHeatmap(data) {
 
   yAxis.selectAll("text").attr("class", "scale-text");
 
-  var heatmapMouseover = function(d, e) {
-    // var coordinates = d3.mouse(this);
-    // var x = coordinates[0];
-    // var y = coordinates[1];
-    // .style("position", "absolute")
-    // .style("left", x + "px")
-    // .style("top", y + "px")
-
+  var heatmapMouseover = function(d) {
+    const pageX = d3.event.clientX - d3.event.clientX / 2;
+    const pageY = d3.event.clientY + 40;
+    tooltip.style("display", "block");
+    tooltip.style("left", pageX + "px");
+    tooltip.style("top", pageY + "px");
     tooltip.html(
       "There were <span>" +
         d.num +
@@ -157,12 +155,12 @@ function drawHorizontalHeatmap(data) {
         d.time +
         ":00</span>"
     );
-
     d3.select(this).style("cursor", "pointer");
     d3.select(this).style("opacity", ".7");
   };
 
   var heatmapMouseleave = function(d) {
+    tooltip.style("display", "none");
     d3.select(this).classed("hover", false);
     d3.select(this).style("opacity", "1");
     tooltip.html("Click or hover over a circle for more information");
@@ -188,7 +186,7 @@ function drawHorizontalHeatmap(data) {
     .style("fill", function(d) {
       return myColor(d.num);
     })
-    .on("mouseover", heatmapMouseover)
+    .on("mousemove", heatmapMouseover)
     .on("click", heatmapMouseover)
     .on("mouseleave", heatmapMouseleave)
     .exit()
@@ -246,7 +244,7 @@ function drawHorizontalHeatmap(data) {
     .append("g")
     .attr("class", "annotation-group")
     .call(makeAnnotations)
-    .style("opacity", "0");
+    .attr("display", "none");
 }
 
 function showHigherDays() {
@@ -310,7 +308,7 @@ function drawHeatmapLegend() {
   var colorLegend = d3
     .legendColor()
     .scale(heatmapColorScale)
-    .shapeWidth(40)
+    .shapeWidth(30)
     .cells(7)
     .orient("horizontal")
     .labelFormat("0.0f");

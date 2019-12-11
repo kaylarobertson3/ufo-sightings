@@ -3,8 +3,8 @@ var currentState;
 var mapData;
 
 function initMap() {
-  d3.json("data/map/states.json", function (geoData) {
-    d3.csv("data/map/UFO-sightings-by-pop.csv", function (error, data) {
+  d3.json("data/map/states.json", function(geoData) {
+    d3.csv("data/map/UFO-sightings-by-pop.csv", function(error, data) {
       if (error) {
         console.log("error getting data");
       } else {
@@ -62,7 +62,7 @@ function drawMap(data) {
     .attr("id", "state")
     .style("stroke", "#0A1E24")
     .style("stroke-width", ".7")
-    .attr("fill", function (d) {
+    .attr("fill", function(d) {
       return mapColorScale(d.properties.sightings);
     });
 
@@ -70,7 +70,7 @@ function drawMap(data) {
 
   map
     .selectAll("path")
-    .on("mouseover", mapMouseOver)
+    .on("mousemove", mapMouseOver)
     .on("click", mapMouseOver)
     .on("mouseout", mapMouseLeave);
 }
@@ -107,37 +107,49 @@ function drawMapLegend() {
     .call(colorLegend);
 }
 
-var mapMouseOver = function (d) {
+var mapMouseOver = function(d) {
   d3.select(this).style("opacity", ".7");
   d3.select(this).style("cursor", "pointer");
+  const pageX = d3.event.clientX - d3.event.clientX / 2;
+  const pageY = d3.event.clientY + 40;
+  tooltip.style("display", "block");
+  tooltip.style("left", pageX + "px");
+  tooltip.style("top", pageY + "px");
   tooltip.html(
     "In <span>" +
-    d.properties.NAME +
-    "</span>, there were <span>" +
-    d.properties.sightings +
-    " UFO sightings </span>per 100,000 people"
+      d.properties.NAME +
+      "</span>, there were <span>" +
+      d.properties.sightings +
+      " UFO sightings </span>per 100,000 people"
   );
 };
 
-var mapMouseLeave = function (d) {
+var mapMouseLeave = function(d) {
   tooltip.html("Hover over a state for more information");
   d3.select(this).style("opacity", "1");
+  tooltip.style("display", "none");
 };
 
-var circleMouseover = function (d) {
+var circleMouseover = function(d) {
+  d3.select(this).style("opacity", ".7");
+  d3.select(this).style("cursor", "pointer");
+  const pageX = d3.event.clientX - d3.event.clientX / 2;
+  const pageY = d3.event.clientY + 40;
+  tooltip.style("display", "block");
+  tooltip.style("left", pageX + "px");
+  tooltip.style("top", pageY + "px");
   const cityCap = d.city.charAt(0).toUpperCase() + d.city.slice(1);
-  console.log("duration", d["duration (hours/min)"])
   d3.select(this).style("opacity", ".7");
   tooltip.html(
-    `<p><span>City:</span>  ${cityCap} </p>
-    <p><span>Date, time: </span> ${d.datetime} </p>
-    <p><span>Duration:</span>  ${ d["duration (hours/min)"]} </p>
-    <p><span>Shape:</span>  ${d.shape} </p>
-    <p><span>Description:</span> "${d.comments}"</p>`
+    `<div class="tooltipRow"><p><span>  City:</span>  ${cityCap} </p>
+    <p><span>  Date: </span> ${d.datetime} </p>
+    <p><span>  Duration:</span>  ${d["duration (hours/min)"]} </p>
+    <p><span>  Shape:</span>  ${d.shape} </p>
+    <p><span>  Description:</span> "${d.comments}"</p></div>`
   );
 };
 
-var circleMouseout = function (d) {
+var circleMouseout = function(d) {
   map.selectAll("circle").style("opacity", ".1");
   tooltip.html("Hover over a circle for more information");
 };
@@ -153,10 +165,10 @@ function updateMapWA() {
 
   var path = d3.geoPath().projection(projection);
 
-  d3.csv("data/lat-long/wa-sightings.csv", function (waData) {
+  d3.csv("data/lat-long/wa-sightings.csv", function(waData) {
     var paths = map
       .selectAll("path")
-      .on("mouseover", "")
+      .on("mousemove", "")
       .on("click", "");
 
     map
@@ -228,6 +240,7 @@ function updateMapWA() {
     map
       .selectAll("circle")
       .on("mouseover", circleMouseover)
+      .on("mousemove", "")
       .on("click", circleMouseover)
       .on("mouseout", circleMouseout);
   });
@@ -244,9 +257,10 @@ function updateMapMT() {
 
   var path = d3.geoPath().projection(projection);
 
-  d3.csv("data/lat-long/mt-sightings.csv", function (mtData) {
+  d3.csv("data/lat-long/mt-sightings.csv", function(mtData) {
     var paths = map
       .selectAll("path")
+      .on("mousemove", "")
       .on("mouseover", "")
       .on("click", "");
 
@@ -314,6 +328,7 @@ function updateMapMT() {
       .attr("stroke", "#0A1E24")
       .attr("transform", "translate(" + translate + ")scale(" + scale + ")")
       .on("mouseover", circleMouseover)
+      .on("mousemove", "")
       .on("mouseout", circleMouseout);
   });
 }

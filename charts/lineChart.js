@@ -18,14 +18,15 @@ const months = [
   "Dec"
 ];
 
-var lineMouseleave = function (d) {
+var lineMouseleave = function(d) {
   tooltip.html("Hover over a peak for more information");
+  tooltip.style("display", "none");
 };
 
 function initLineChart() {
   // format the data
-  d3.csv("data/line-chart/year-month-count.csv", function (error, data) {
-    data.forEach(function (d) {
+  d3.csv("data/line-chart/year-month-count.csv", function(error, data) {
+    data.forEach(function(d) {
       d.date = parseTime(d.date);
       d.count = +d.count;
     });
@@ -41,9 +42,10 @@ function drawLineChart(data) {
   lineChart
     .attr(
       "viewBox",
-      "0 0 " + (getChartWidth() - margin.left) + " " + chartHeight)
+      "0 0 " + (getChartWidth() - margin.left) + " " + chartHeight
+    )
     .attr("width", getChartWidth())
-    .attr("height", chartHeight + (chartHeight * .4));
+    .attr("height", chartHeight + chartHeight * 0.4);
 
   var x = d3
     .scaleTime()
@@ -58,10 +60,10 @@ function drawLineChart(data) {
   var valueLine = d3
     .line()
     .curve(d3.curveLinear)
-    .x(function (d) {
+    .x(function(d) {
       return x(d.date);
     })
-    .y(function (d) {
+    .y(function(d) {
       return y(d.count);
     });
 
@@ -69,7 +71,7 @@ function drawLineChart(data) {
     .append("g")
     .attr("class", "xAxis")
     .attr("transform", "translate(0," + chartHeight + ")")
-    .call(d3.axisBottom(x))
+    .call(d3.axisBottom(x));
   // .selectAll("text")
   // .attr("y", 0)
   // .attr("x", 9)
@@ -95,9 +97,7 @@ function drawLineChart(data) {
     .attr("class", "yAxis")
     .attr("transform", "translate(0,5)")
     .call(
-      d3
-        .axisRight(y)
-        .tickSize(getChartWidth() - margin.left)
+      d3.axisRight(y).tickSize(getChartWidth() - margin.left)
       // .ticks(10)
     );
 
@@ -128,10 +128,10 @@ function drawLineChart(data) {
     .attr("fill", "#fff8e1")
     .attr("class", "lineChart-circle")
     .attr("stroke", "none")
-    .attr("cx", function (d) {
+    .attr("cx", function(d) {
       return x(d.date);
     })
-    .attr("cy", function (d) {
+    .attr("cy", function(d) {
       return y(d.count);
     })
     .attr("r", 10)
@@ -139,28 +139,33 @@ function drawLineChart(data) {
 
   circles
     .attr("transform", "translate(0,5)")
-    .on("mouseover", function (d) {
+    .on("mouseover", function(d) {
       d3.select(this).style("cursor", "pointer");
+      const pageX = d3.event.clientX - d3.event.clientX / 2;
+      const pageY = d3.event.clientY + 40;
+      tooltip.style("display", "block");
+      tooltip.style("left", pageX + "px");
+      tooltip.style("top", pageY + "px");
       tooltip.html(
         "There were <span>" +
-        d.count +
-        "</span> sightings in <span>" +
-        d.month +
-        ", " +
-        d.year +
-        "</span>"
+          d.count +
+          "</span> sightings in <span>" +
+          d.month +
+          ", " +
+          d.year +
+          "</span>"
       );
     })
-    .on("click", function (d) {
+    .on("click", function(d) {
       d3.select(this).style("cursor", "pointer");
       tooltip.html(
         "There were <span>" +
-        d.count +
-        "</span> sightings in <span>" +
-        d.month +
-        ", " +
-        d.year +
-        "</span>"
+          d.count +
+          "</span> sightings in <span>" +
+          d.month +
+          ", " +
+          d.year +
+          "</span>"
       );
     })
     .on("mouseout", lineMouseleave);
@@ -187,29 +192,32 @@ function drawLineChart(data) {
     .duration(800)
     .ease(d3.easePolyInOut)
     .attr("stroke-dashoffset", 0)
-    .on("end", function () {
+    .on("end", function() {
       d3.selectAll(".lineChart-circle").style("opacity", 0);
     });
 
-  const annotations = [{
-    type: d3.annotationCalloutCircle,
-    note: {
-      label: "An uptick in UFO sightings happened alongside Internet and mobile phone use",
-      title: "UFOs go online",
-      wrap: 190,
-      orientation: "top",
-      align: "middle"
-    },
-    subject: {
-      radius: 20
-    },
-    data: {
-      x: 1995,
-      y: 120
-    },
-    dy: -117,
-    dx: -100
-  }].map(function (d) {
+  const annotations = [
+    {
+      type: d3.annotationCalloutCircle,
+      note: {
+        label:
+          "An uptick in UFO sightings happened alongside Internet and mobile phone use",
+        title: "UFOs go online",
+        wrap: 190,
+        orientation: "top",
+        align: "middle"
+      },
+      subject: {
+        radius: 20
+      },
+      data: {
+        x: 1995,
+        y: 120
+      },
+      dy: -117,
+      dx: -100
+    }
+  ].map(function(d) {
     d.color = "#E8336D";
     return d;
   });
@@ -238,55 +246,56 @@ function drawLineChart(data) {
 }
 
 function updateLineChart() {
-  lineChart.selectAll(".annotation-group").remove('*');
-  const monthCountData = [{
-    month: 1,
-    count: 4582
-  },
-  {
-    month: 2,
-    count: 3803
-  },
-  {
-    month: 3,
-    count: 4457
-  },
-  {
-    month: 4,
-    count: 4446
-  },
-  {
-    month: 5,
-    count: 4245
-  },
-  {
-    month: 6,
-    count: 6432
-  },
-  {
-    month: 7,
-    count: 7639
-  },
-  {
-    month: 8,
-    count: 6825
-  },
-  {
-    month: 9,
-    count: 6182
-  },
-  {
-    month: 10,
-    count: 6228
-  },
-  {
-    month: 11,
-    count: 5665
-  },
-  {
-    month: 12,
-    count: 4610
-  }
+  lineChart.selectAll(".annotation-group").remove("*");
+  const monthCountData = [
+    {
+      month: 1,
+      count: 4582
+    },
+    {
+      month: 2,
+      count: 3803
+    },
+    {
+      month: 3,
+      count: 4457
+    },
+    {
+      month: 4,
+      count: 4446
+    },
+    {
+      month: 5,
+      count: 4245
+    },
+    {
+      month: 6,
+      count: 6432
+    },
+    {
+      month: 7,
+      count: 7639
+    },
+    {
+      month: 8,
+      count: 6825
+    },
+    {
+      month: 9,
+      count: 6182
+    },
+    {
+      month: 10,
+      count: 6228
+    },
+    {
+      month: 11,
+      count: 5665
+    },
+    {
+      month: 12,
+      count: 4610
+    }
   ];
 
   d3.selectAll(".lineChart-circle").remove();
@@ -313,11 +322,7 @@ function updateLineChart() {
   var yAxis = lineChart
     .selectAll(".yAxis")
     .transition()
-    .call(
-      d3
-        .axisRight(y)
-        .tickSize(getChartWidth() - margin.left)
-    );
+    .call(d3.axisRight(y).tickSize(getChartWidth() - margin.left));
 
   yAxis
     .selectAll(".tick text")
@@ -327,10 +332,10 @@ function updateLineChart() {
   var valueLine = d3
     .line()
     .curve(d3.curveLinear)
-    .x(function (d) {
+    .x(function(d) {
       return x(d.month);
     })
-    .y(function (d) {
+    .y(function(d) {
       return y(d.count);
     });
 
@@ -342,7 +347,7 @@ function updateLineChart() {
     .attr("stroke", "#b4fbde")
     .attr("stroke-width", "2")
     .attr("fill", "none")
-    .on("end", function () {
+    .on("end", function() {
       d3.selectAll(".lineChart-circle").style("opacity", 1);
     });
 
@@ -353,39 +358,43 @@ function updateLineChart() {
     .append("circle")
     .attr("fill", "#fff8e1")
     .attr("class", "lineChart-circle")
-    .attr("cx", function (d) {
+    .attr("cx", function(d) {
       return x(d.month);
     })
-    .attr("cy", function (d) {
+    .attr("cy", function(d) {
       return y(d.count);
     })
     .attr("r", 5)
     .style("opacity", 0)
-    .on("mouseover", function (d) {
+    .on("mousemove", function(d) {
       d3.select(this).style("cursor", "pointer");
-      d3.select(this).style("opacity", ".7")
+      d3.select(this).style("opacity", ".7");
+      const pageX = d3.event.clientX - d3.event.clientX / 2;
+      const pageY = d3.event.clientY + 40;
+      tooltip.style("left", pageX + "px");
+      tooltip.style("top", pageY + "px");
       tooltip.html(
         "There were <span>" +
-        d.count +
-        "</span> sightings in <span>" +
-        months[d.month - 1] +
-        "</span>"
+          d.count +
+          "</span> sightings in <span>" +
+          months[d.month - 1] +
+          "</span>"
       );
     })
-    .on("click", function (d) {
+    .on("click", function(d) {
       d3.select(this).style("cursor", "pointer");
-      d3.select(this).style("opacity", ".7")
+      d3.select(this).style("opacity", ".7");
       tooltip.html(
         "There were <span>" +
-        d.count +
-        "</span> sightings in <span>" +
-        months[d.month - 1] +
-        "</span>"
+          d.count +
+          "</span> sightings in <span>" +
+          months[d.month - 1] +
+          "</span>"
       );
     })
-    .on("mouseout", function (d) {
+    .on("mouseout", function(d) {
       d3.select(this).style("opacity", "1");
-      lineMouseleave
+      lineMouseleave;
     });
 
   circles.attr("transform", "translate(0,5)");
@@ -398,25 +407,27 @@ function updateLineChart() {
   const legendTitle = "Total sightings (1910 - 2013) by month";
   drawLineChartLegend(legendTitle);
 
-  const annotations = [{
-    type: d3.annotationCalloutCircle,
-    note: {
-      label: "7639 sightings happened in July",
-      title: "July",
-      wrap: 190,
-      orientation: "top",
-      align: "middle"
-    },
-    subject: {
-      radius: 20
-    },
-    data: {
-      x: 7,
-      y: 7639
-    },
-    dy: 169,
-    dx: 0
-  }].map(function (d) {
+  const annotations = [
+    {
+      type: d3.annotationCalloutCircle,
+      note: {
+        label: "7639 sightings happened in July",
+        title: "July",
+        wrap: 190,
+        orientation: "top",
+        align: "middle"
+      },
+      subject: {
+        radius: 20
+      },
+      data: {
+        x: 7,
+        y: 7639
+      },
+      dy: 169,
+      dx: 0
+    }
+  ].map(function(d) {
     d.color = "#E8336D";
     return d;
   });
@@ -442,9 +453,8 @@ function updateLineChart() {
 }
 
 function updateLineChartJuly() {
-  lineChart.selectAll(".annotation-group").remove('*');
-  d3.csv("data/line-chart/july.csv", function (error, data) {
-
+  lineChart.selectAll(".annotation-group").remove("*");
+  d3.csv("data/line-chart/july.csv", function(error, data) {
     d3.selectAll(".lineChart-circle").remove();
 
     var x = d3
@@ -465,11 +475,7 @@ function updateLineChartJuly() {
     var yAxis = lineChart
       .selectAll(".yAxis")
       .transition()
-      .call(
-        d3
-          .axisRight(y)
-          .tickSize(getChartWidth() - margin.left)
-      );
+      .call(d3.axisRight(y).tickSize(getChartWidth() - margin.left));
 
     yAxis
       .selectAll(".tick text")
@@ -479,10 +485,10 @@ function updateLineChartJuly() {
     var valueLine = d3
       .line()
       .curve(d3.curveLinear)
-      .x(function (d) {
+      .x(function(d) {
         return x(d.date);
       })
-      .y(function (d) {
+      .y(function(d) {
         return y(d.num);
       });
 
@@ -494,7 +500,7 @@ function updateLineChartJuly() {
       .attr("stroke", "#b4fbde")
       .attr("stroke-width", "2")
       .attr("fill", "none")
-      .on("end", function () {
+      .on("end", function() {
         d3.selectAll(".lineChart-circle").style("opacity", 1);
       });
 
@@ -507,35 +513,42 @@ function updateLineChartJuly() {
       .append("circle")
       .attr("fill", "#fff8e1")
       .attr("class", "lineChart-circle")
-      .attr("cx", function (d) {
+      .attr("cx", function(d) {
         return x(d.date);
       })
-      .attr("cy", function (d) {
+      .attr("cy", function(d) {
         return y(d.num);
       })
       .attr("r", 5)
       .style("opacity", 0)
-      .on("mouseover", function (d) {
+      .on("mouseover", function(d) {
+        const pageX = d3.event.clientX - d3.event.clientX / 2;
+        const pageY = d3.event.clientY + 40;
+        tooltip.style("display", "block");
+        tooltip.style("left", pageX + "px");
+        tooltip.style("top", pageY + "px");
         d3.select(this).style("cursor", "pointer");
-        d3.select(this).style("opacity", ".7")
-        tooltip.html(d.num +
-          "</span> sightings happened on July <span>" +
-          parseInt(d.date) +
-          "</span>"
+        d3.select(this).style("opacity", ".7");
+        tooltip.html(
+          d.num +
+            "</span> sightings happened on July <span>" +
+            parseInt(d.date) +
+            "</span>"
         );
       })
-      .on("click", function (d) {
+      .on("click", function(d) {
         d3.select(this).style("cursor", "pointer");
-        d3.select(this).style("opacity", ".7")
-        tooltip.html(d.num +
-          "</span> sightings happened on the <span>" +
-          d.date +
-          "of July</span>"
+        d3.select(this).style("opacity", ".7");
+        tooltip.html(
+          d.num +
+            "</span> sightings happened on the <span>" +
+            d.date +
+            "of July</span>"
         );
       })
-      .on("mouseout", function (d) {
+      .on("mouseout", function(d) {
         d3.select(this).style("opacity", "1");
-        lineMouseleave
+        lineMouseleave;
       });
 
     circles.attr("transform", "translate(0,5)");
@@ -548,26 +561,27 @@ function updateLineChartJuly() {
     const legendTitle = "Total U.S. sightings in July (1910 - 2013)";
     drawLineChartLegend(legendTitle);
 
-
-    const annotations = [{
-      type: d3.annotationCalloutCircle,
-      note: {
-        label: "1083 total sightings",
-        title: "4th of July",
-        wrap: 190,
-        orientation: "top",
-        align: "middle"
-      },
-      subject: {
-        radius: 20
-      },
-      data: {
-        x: 4,
-        y: 1083
-      },
-      dy: 50,
-      dx: 120
-    }].map(function (d) {
+    const annotations = [
+      {
+        type: d3.annotationCalloutCircle,
+        note: {
+          label: "1083 total sightings",
+          title: "4th of July",
+          wrap: 190,
+          orientation: "top",
+          align: "middle"
+        },
+        subject: {
+          radius: 20
+        },
+        data: {
+          x: 4,
+          y: 1083
+        },
+        dy: 50,
+        dx: 120
+      }
+    ].map(function(d) {
       d.color = "#E8336D";
       return d;
     });
@@ -590,7 +604,7 @@ function updateLineChartJuly() {
       .attr("class", "annotation-group")
       .call(makeAnnotations)
       .style("opacity", "1");
-  })
+  });
 }
 
 function drawLineChartLegend(legendTitle) {

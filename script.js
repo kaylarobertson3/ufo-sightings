@@ -44,8 +44,6 @@ const getChartWidth = () => {
     : containerMaxWidth - stepWidth - margin.left - margin.right;
 };
 
-console.log("getchartwidth", getChartWidth());
-
 function showMap() {
   map
     .transition()
@@ -179,17 +177,15 @@ function handleStepEnter(response) {
     return i === response.index;
   });
 
-  console.log("STEP:", response.index);
-
   // update graphic based on step
   if (response.index == 0) {
     d3.selectAll(".shooting").style("opacity", 0);
     showHeatmap();
     d3.selectAll("#intro").attr("opacity", "0");
     heatmap.selectAll("*").style("fill-opacity", 1);
-    d3.select(".annotation-group").style("opacity", "0");
+    d3.select(".annotation-group").style("display", "none");
   } else if (response.index == 1) {
-    d3.select(".annotation-group").style("opacity", "1");
+    d3.select(".annotation-group").style("display", "none");
     showHeatmap();
     showHigherDays();
   } else if (response.index == 2) {
@@ -222,7 +218,7 @@ function handleStepEnter(response) {
     showLineChart();
     drawLineChart(lineChartData);
   } else if (response.index == 7) {
-    lineChart.select(".annotation-group").style("opacity", "1");
+    lineChart.select(".annotation-group").style("display", "none");
   } else if (response.index == 8) {
     // lineChart.select(".annotation-group").style("opacity", "0");
     updateLineChart();
@@ -232,16 +228,12 @@ function handleStepEnter(response) {
 }
 
 function handleContainerEnter(response) {
-  // response = { direction }
-
   // sticky the graphic
   graphic.classed("is-fixed", true);
   graphic.classed("is-bottom", false);
 }
 
 function handleContainerExit(response) {
-  // response = { direction }
-
   // un-sticky the graphic, and pin to top/bottom of container
   graphic.classed("is-fixed", false);
   graphic.classed("is-bottom", response.direction === "down");

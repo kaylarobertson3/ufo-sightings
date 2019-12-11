@@ -91,10 +91,6 @@ p {
   opacity: 0;
 }
 
-.section {
-  min-height: 95vh;
-}
-
 h1 {
   font-weight: 600;
   font-size: 35px;
@@ -485,6 +481,7 @@ h1 {
 .scroll__graphic.is-fixed {
   position: sticky;
   position: -webkit-sticky;
+  z-index: 10;
 }
 
 .scroll__text {
@@ -537,18 +534,27 @@ h1 {
 
 /* TOOLTIP */
 
+/* TODO: refactor z-indexes */
 #tooltip {
-  padding: 1rem 0 1rem 0;
-  height: 100px;
-  top: 20%;
+  display: none;
+  padding: 1rem 1.5rem;
   line-height: 1.4;
   text-align: left;
   border-radius: 5px;
   max-width: 400px;
-  z-index: 500;
+  z-index: 600;
+  min-width: 150px;
   font-size: 16px;
-  color: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
+  color: #0a1e24;
   line-height: 1.6;
+  position: absolute;
+}
+
+.tooltipRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #tooltip span {
@@ -616,7 +622,7 @@ article {
 
 .legend {
   color: #0a1e24;
-  margin-top: 0.5em;
+  margin: 0.5em 0 1rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -675,7 +681,7 @@ article {
 
 .label {
   fill: white;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 #ad-block {
