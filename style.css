@@ -388,7 +388,7 @@ h1 {
 }
 
 .scroll-down p {
-  font-size: 15px;
+  font-size: 0.7em;
   letter-spacing: 1px;
   color: white;
   text-transform: uppercase;
@@ -724,6 +724,10 @@ article {
 }
 
 @media (max-width: 800px) {
+  .scroll__graphic.is-fixed {
+    z-index: 0;
+  }
+
   legend .axis-label {
     font-size: 16px;
   }

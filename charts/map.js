@@ -268,7 +268,7 @@ function updateMapMT() {
       .selectAll("*")
       .transition()
       .duration(300);
-
+    tooltip.style("display", "none");
     tooltip.html("Hover over a circle for more information");
 
     map.selectAll("path").style("fill-opacity", d => {
